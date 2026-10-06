@@ -23,6 +23,11 @@
 #if MDNSRESPONDER_SUPPORTS(APPLE, QUERIER)
 #include "QuerierSupport.h"
 #endif
+#define nw_resolver_config_t void*
+#define nw_resolver_class_t void*
+#define nw_resolver_class_default_direct 0
+#define nw_resolver_config_get_class(...) 0
+#define nw_resolver_config_cancel_updates(...)
 
 #define _nw_forget(PTR)         \
     do                          \

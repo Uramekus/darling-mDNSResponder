@@ -1,3 +1,4 @@
+#if 0
 /*
 * Copyright (c) 2019-2020 Apple Inc. All rights reserved.
 *
@@ -596,3 +597,4 @@ exit:
 	}
 	return _mdns_trust_checks_get_status(&ref);
 }
+#endif

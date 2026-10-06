@@ -1,3 +1,4 @@
+#if 0
 /*
  * Copyright (c) 2019-2020 Apple Inc. All rights reserved.
  *
@@ -97,3 +98,4 @@ util_get_enclosure_color_str(char * const __unused out_str, uint8_t __unused len
 	return util_enclosure_color_none;
 }
 #endif // TARGET_OS_OSX
+#endif

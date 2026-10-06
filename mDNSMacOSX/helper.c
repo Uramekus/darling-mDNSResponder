@@ -774,9 +774,9 @@ static enum DNSKeyFormat getDNSKeyFormat(SecKeychainItemRef item, SecKeychainAtt
     }
     
     os_log_info(log_handle,"getDNSKeyFormat: entry (\"%.*s\", \"%.*s\", \"%.*s\")",
-                   (int)attributes->attr[0].length, attributes->attr[0].data,
-                   (int)attributes->attr[1].length, attributes->attr[1].data,
-                   (int)attributes->attr[2].length, attributes->attr[2].data);
+                   (int)attributes->attr[0].length, (char*)attributes->attr[0].data,
+                   (int)attributes->attr[1].length, (char*)attributes->attr[1].data,
+                   (int)attributes->attr[2].length, (char*)attributes->attr[2].data);
 
     if (attributes->attr[1].length >= MAX_ESCAPED_DOMAIN_NAME +
         sizeof(dnsprefix)-1)
@@ -791,11 +791,11 @@ static enum DNSKeyFormat getDNSKeyFormat(SecKeychainItemRef item, SecKeychainAtt
               (unsigned int)attributes->attr[2].length);
         goto skip;
     }
-    if (attributes->attr[1].length >= sizeof(dnsprefix)-1 && 0 == strncasecmp(attributes->attr[1].data, dnsprefix, sizeof(dnsprefix)-1))
+    if (attributes->attr[1].length >= sizeof(dnsprefix)-1 && 0 == strncasecmp((char*)attributes->attr[1].data, dnsprefix, sizeof(dnsprefix)-1))
         format = formatDnsPrefixedServiceItem;
-    else if (attributes->attr[0].length == sizeof(ddns)-1 && 0 == strncasecmp(attributes->attr[0].data, ddns, sizeof(ddns)-1))
+    else if (attributes->attr[0].length == sizeof(ddns)-1 && 0 == strncasecmp((char*)attributes->attr[0].data, ddns, sizeof(ddns)-1))
         format = formatDdnsTypeItem;
-    else if (attributes->attr[0].length == sizeof(ddnsrev)-1 && 0 == strncasecmp(attributes->attr[0].data, ddnsrev, sizeof(ddnsrev)-1))
+    else if (attributes->attr[0].length == sizeof(ddnsrev)-1 && 0 == strncasecmp((char*)attributes->attr[0].data, ddnsrev, sizeof(ddnsrev)-1))
         format = formatDdnsTypeItem;
     else
     {
@@ -831,10 +831,10 @@ static CFPropertyListRef copyKeychainItemInfo(SecKeychainItemRef item, SecKeycha
     switch ((enum DNSKeyFormat)format)
     {
         case formatDdnsTypeItem:
-            data = CFDataCreate(kCFAllocatorDefault, attributes->attr[1].data, attributes->attr[1].length);
+            data = CFDataCreate(kCFAllocatorDefault, (char*)attributes->attr[1].data, attributes->attr[1].length);
             break;
         case formatDnsPrefixedServiceItem:
-            data = CFDataCreate(kCFAllocatorDefault, attributes->attr[1].data, attributes->attr[1].length);
+            data = CFDataCreate(kCFAllocatorDefault, (char*)attributes->attr[1].data, attributes->attr[1].length);
             break;
         default:
             os_log(log_handle, "copyKeychainItemInfo: unknown DNSKeyFormat value");
@@ -849,7 +849,7 @@ static CFPropertyListRef copyKeychainItemInfo(SecKeychainItemRef item, SecKeycha
     CFRelease(data);
     
     // Insert the Where attribute (kmDNSKcAccount)
-    if (NULL == (data = CFDataCreate(kCFAllocatorDefault, attributes->attr[2].data, attributes->attr[2].length)))
+    if (NULL == (data = CFDataCreate(kCFAllocatorDefault, (char*)attributes->attr[2].data, attributes->attr[2].length)))
     {
         os_log(log_handle, "copyKeychainItemInfo: CFDataCreate for attr[2] failed");
         goto error;
@@ -862,7 +862,7 @@ static CFPropertyListRef copyKeychainItemInfo(SecKeychainItemRef item, SecKeycha
     if (noErr != (status = SecKeychainItemCopyAttributesAndData(item, NULL, NULL, NULL, &keylen, &keyp)))
     {
         os_log(log_handle, "copyKeychainItemInfo: could not retrieve key for \"%.*s\": %d",
-              (int)attributes->attr[1].length, attributes->attr[1].data, status);
+              (int)attributes->attr[1].length, (char*)attributes->attr[1].data, status);
         goto error;
     }
     

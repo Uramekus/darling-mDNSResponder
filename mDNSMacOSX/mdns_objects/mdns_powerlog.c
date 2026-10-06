@@ -1,3 +1,4 @@
+#if 0
 /*
  * Copyright (c) 2020 Apple Inc. All rights reserved.
  *
@@ -299,3 +300,4 @@ _mdns_pid_to_name(const pid_t pid, char name[STATIC_PARAM MAXCOMLEN])
 	}
 	return NULL;
 }
+#endif

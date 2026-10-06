@@ -20,6 +20,10 @@
 
 #include <CoreUtils/CoreUtils.h>
 
+#define TARGET_OS_IOS_LIKE_DEVICE 0
+#include <CoreFoundation/CoreFoundation.h>
+#define CFIsType(OBJ, TYPE) (OBJ != NULL && CFGetTypeID(OBJ) == TYPE ## GetTypeID())
+#include <os/log.h>
 //======================================================================================================================
 // MARK: - Internals
 

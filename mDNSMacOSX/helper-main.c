@@ -642,3 +642,9 @@ const char VersionString_SCCS[] = "@(#) mDNSResponderHelper " STRINGIFY(mDNSResp
 const char *__crashreporter_info__ = VersionString_SCCS + 5;
 asm (".desc ___crashreporter_info__, 0x10");
 #endif
+void* DNSServiceGetRetainedResolverDefaults(void) { return 0; }
+int assistant_helper_get_buddy_state(void) { return 0; }
+void assistant_helper_notify_when_buddy_done(void* a) {}
+int bundle_sdk_is_ios14_or_later(void* a) { return 1; }
+int mdns_tlv16_get_required_length(void* a) { return 0; }
+void mdns_tlv16_set(void* a, void* b) {}

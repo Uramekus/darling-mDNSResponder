@@ -16,6 +16,7 @@
 
 #include "mdns_address.h"
 
+#include <os/log.h>
 #include "mdns_helpers.h"
 #include "mdns_internal.h"
 #include "mdns_objects.h"

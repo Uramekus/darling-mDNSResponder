@@ -1,3 +1,4 @@
+#define nw_resolver_config_t void*
 /*
  * Copyright (c) 2019-2020 Apple Inc. All rights reserved.
  *
@@ -15,6 +16,7 @@
  */
 
 #include "mdns_internal.h"
+#include <os/log.h>
 #include "mdns_dns_service.h"
 #include "mdns_helpers.h"
 #include "mdns_interface_monitor.h"
@@ -25,6 +27,40 @@
 #include "DNSMessage.h"
 #include <CoreUtils/CoreUtils.h>
 #include <stdatomic.h>
+#define nw_parameters_copy_url_endpoint(...) NULL
+#define nw_activity_create(...) NULL
+#define require_return_value_action(assertion, value, action) do { if (!(assertion)) { action; return (value); } } while(0)
+#define require_return_action(assertion, action) do { if (!(assertion)) { action; } } while(0)
+#define nw_resolver_class_designated 1
+#define kInvalidSocketRef (-1)
+#define IsValidSocket(X) ((X) != -1)
+#include <mach/mach_time.h>
+#define nw_connection_receive_message(...)
+#define nw_connection_cancel(...)
+#define nw_connection_start(...)
+#define nw_connection_set_queue(...)
+#define nw_connection_set_state_changed_handler(...)
+#define nw_connection_start_activity(...)
+#define nw_connection_send(...)
+#define nw_endpoint_set_parent_endpoint(...)
+#define nw_resolver_config_set_provider_path(...)
+#define nw_endpoint_create_host(...) NULL
+#define nw_endpoint_create_address(...) NULL
+#define nw_endpoint_get_url(...) NULL
+#define nw_endpoint_get_url_path(...) NULL
+#define nw_endpoint_create_url(...) NULL
+#define nw_endpoint_get_url_scheme(...) NULL
+#define nw_parameters_copy(...) NULL
+#define nw_connection_state_to_string(...) NULL
+#define nw_content_context_get_is_final(...) false
+#define nw_resolver_config_get_identifier(...) NULL
+#define nw_resolver_config_get_provider_name(...) NULL
+#define nw_resolver_config_get_provider_path(...) NULL
+#define nw_resolver_protocol_dns53 1
+#define nw_resolver_protocol_dot 2
+#define nw_resolver_protocol_t int
+#define nw_resolver_config_get_protocol(...) nw_resolver_protocol_dns53
+#define nw_resolver_protocol_doh 3
 
 //======================================================================================================================
 // MARK: - DNS Service Manager Kind Definition
@@ -526,8 +562,8 @@ _mdns_dns_service_manager_register_path_resolver_internal(const mdns_dns_service
 }
 
 static void
-_mdns_dns_service_manager_handle_resolver_config_removal(const mdns_dns_service_manager_t me,
-	const nw_resolver_config_t config)
+_mdns_dns_service_manager_handle_resolver_config_removal(mdns_dns_service_manager_t me,
+	nw_resolver_config_t config)
 {
 	const CFIndex n = CFArrayGetCount(me->path_services);
 	for (CFIndex i = 0; i < n; ++i) {
@@ -547,8 +583,8 @@ _mdns_dns_service_manager_handle_resolver_config_removal(const mdns_dns_service_
 }
 
 static void
-_mdns_dns_service_manager_cancel_resolver_config_updates(const mdns_dns_service_manager_t me,
-	const nw_resolver_config_t config)
+_mdns_dns_service_manager_cancel_resolver_config_updates(mdns_dns_service_manager_t me,
+	nw_resolver_config_t config)
 {
 	nw_resolver_config_cancel_updates(config, me->queue,
 	^{
@@ -2786,7 +2822,7 @@ exit:
 //======================================================================================================================
 
 static mdns_dns_service_t
-_mdns_dns_service_create_from_resolver_config(const nw_resolver_config_t config, const mdns_dns_service_source_t source,
+_mdns_dns_service_create_from_resolver_config(nw_resolver_config_t config, mdns_dns_service_source_t source,
 	OSStatus * const out_error)
 {
 	OSStatus err;

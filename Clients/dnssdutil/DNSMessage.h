@@ -1,9 +1,19 @@
+#define DataBuffer void*
+#define kCountErr (-1)
+#define kInternalErr (-1)
 /*
 	Copyright (c) 2016-2020 Apple Inc. All rights reserved.
 */
 
 #ifndef	__DNSMessage_h
 #define	__DNSMessage_h
+
+#include <dns_sd.h>
+#ifndef kDNSServiceMaxDomainName
+#define kDNSServiceMaxDomainName 1009
+#endif
+#undef check_compile_time
+#define check_compile_time(...)
 
 #include <CoreUtils/CommonServices.h>
 

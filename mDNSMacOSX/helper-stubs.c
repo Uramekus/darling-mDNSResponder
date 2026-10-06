@@ -510,3 +510,83 @@ int mDNSRetrieveTCPInfo(int family, v6addr_t laddr, uint16_t lport, v6addr_t rad
 
     return error_code;
 }
+void* BitArray_GetBit(void* a, int b) { return 0; }
+int BitArray_MaxBits(void* a) { return 0; }
+void BlockForget(void** a) { *a = 0; }
+void* CFBridgingTransfer(void* a) { return a; }
+void CFReleaseNullSafe(void* a) {}
+int Clamp(int a, int b, int c) { return a; }
+int D2DInitialize(void) { return 0; }
+void D2DRelease(void* a) {}
+void D2DRetain(void* a) {}
+int D2DStartAdvertisingPairOnTransport(void* a) { return 0; }
+int D2DStartBrowsingForKeyOnTransport(void* a) { return 0; }
+int D2DStartResolvingPairOnTransport(void* a) { return 0; }
+int D2DStopAdvertisingPairOnTransport(void* a) { return 0; }
+int D2DStopBrowsingForKeyOnTransport(void* a) { return 0; }
+int D2DStopResolvingPairOnTransport(void* a) { return 0; }
+void D2DTerminate(void) {}
+int DHCPInfoGetLeaseStartTime(void) { return 0; }
+void* DHCPInfoGetOptionData(void* a, void* b, void* c) { return 0; }
+void ForgetCF(void** a) { *a = 0; }
+void ForgetCustom(void* a, void* b) {}
+void ForgetCustomEx(void* a, void* b) {}
+void ForgetMem(void** a) { *a = 0; }
+void FreeNullSafe(void* a) {}
+int IsAppleInternalBuild(void) { return 0; }
+int RandomRange(int a, int b) { return a; }
+void* SCDynamicStoreCopyKeyList(void* a, void* b) { return 0; }
+void* SCDynamicStoreKeyCreateNetworkServiceEntity(void* a, void* b, void* c, void* d) { return 0; }
+int SCDynamicStoreSetDisconnectCallBack(void* a, void* b) { return 0; }
+int SCDynamicStoreSetMultiple(void* a, void* b, void* c, void* d) { return 0; }
+const char* SCErrorString(int a) { return ""; }
+void* SCNetworkReachabilityCreateWithOptions(void* a, void* b) { return 0; }
+void SIN6_LEN_SET(void* a) {}
+void SIN_LEN_SET(void* a) {}
+unsigned long long UINT64_C_safe(unsigned long long a) { return a; }
+unsigned long long _dispatch_monotonictime_after_msec(unsigned long long a) { return 0; }
+unsigned long long _dispatch_monotonictime_after_sec(unsigned long long a) { return 0; }
+int audit_token_to_pid(void* a) { return 0; }
+int countof(void* a) { return 0; }
+void dispatch_forget(void** a) { *a = 0; }
+void dispatch_release_null_safe(void* a) {}
+void dispatch_source_forget(void** a) { *a = 0; }
+int increment_saturate(int a, int b) { return 0; }
+int isdigit_safe(int a) { return 0; }
+int map_global_value_errno(int a, int b) { return 0; }
+int map_socket_creation_errno(int a) { return 0; }
+int map_socket_noerr_errno(int a) { return 0; }
+int map_socket_value_errno(int a, int b) { return 0; }
+void mdns_powerlog_awdl_advertise_start(void) {}
+void mdns_powerlog_awdl_advertise_stop(void) {}
+void mdns_powerlog_awdl_browse_start(void) {}
+void mdns_powerlog_awdl_browse_stop(void) {}
+void mdns_powerlog_awdl_resolve_start(void) {}
+void mdns_powerlog_awdl_resolve_stop(void) {}
+void mdns_symptoms_report_encrypted_dns_connection_failure(void) {}
+void mdns_symptoms_report_responsive_server(void) {}
+void mdns_symptoms_report_unresponsive_server(void) {}
+int nw_path_enumerate_resolver_configs(void* a, void* b) { return 0; }
+void nw_resolver_config_cancel_updates(void* a) {}
+void* nw_resolver_config_create(void* a) { return 0; }
+void* nw_resolver_config_create_with_dictionary(void* a) { return 0; }
+int nw_resolver_config_enumerate_match_domains(void* a, void* b) { return 0; }
+int nw_resolver_config_enumerate_name_servers(void* a, void* b) { return 0; }
+void* nw_resolver_config_get_identifier(void* a) { return 0; }
+const char* nw_resolver_config_get_interface_name(void* a) { return ""; }
+void nw_resolver_config_set_class(void* a, int b) {}
+void nw_resolver_config_set_identifier(void* a, void* b) {}
+void nw_resolver_config_set_protocol(void* a, int b) {}
+void nw_resolver_config_set_provider_name(void* a, void* b) {}
+void nw_resolver_config_watch_updates(void* a, void* b) {}
+void require_noerr_return(int a, int b) {}
+void require_return(int a) {}
+void require_return_value(int a, int b) {}
+int tolower_safe(int a) { return a; }
+const char* util_get_enclosure_color_str(void) { return ""; }
+void xpc_connection_forget(void** a) { *a = 0; }
+void xpc_forget(void** a) { *a = 0; }
+void* DNSServiceGetRetainedResolverDefaults(void) { return 0; }
+int assistant_helper_get_buddy_state(void) { return 0; }
+void assistant_helper_notify_when_buddy_done(void* a) {}
+int bundle_sdk_is_ios14_or_later(void* a) { return 1; }

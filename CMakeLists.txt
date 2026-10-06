@@ -7,6 +7,9 @@ include_directories(
 	mDNSMacOSX
 	mDNSPosix
 	DSO
+	mDNSMacOSX/utilities
+	mDNSMacOSX/mdns_objects
+	Clients/dnssdutil
 
 	${CMAKE_SOURCE_DIR}/${DARLING_SDK_RELATIVE_PATH}/usr/include/libarchive
 )
@@ -24,8 +27,10 @@ add_compile_definitions(
 	PRIVATE=1
 )
 
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fblocks -Wno-error=implicit-function-declaration")
 add_compile_options(
 	-fwrapv
+	-fblocks
 )
 
 #
@@ -35,24 +40,27 @@ set(DYLIB_INSTALL_NAME "/usr/lib/system/libsystem_dnssd.dylib")
 set(DYLIB_COMPAT_VERSION "1.0.0")
 set(DYLIB_CURRENT_VERSION "1096.60.2")
 
-add_circular(system_dnssd
-	FAT
-	SOURCES
-		mDNSMacOSX/DNSServiceDiscovery.c
-		mDNSShared/dnssd_clientlib.c
-		mDNSShared/dnssd_clientstub.c
-		mDNSShared/dnssd_ipc.c
-	SIBLINGS
-		system_dyld
-		compiler_rt
-		system_kernel
-		platform
-		system_pthread
-		system_malloc
-		system_c
-		system_blocks
-		libdispatch_shared
-		system_asl
+add_darling_library(system_dnssd
+	mDNSMacOSX/DNSServiceDiscovery.c
+	mDNSShared/dnssd_clientlib.c
+	mDNSShared/dnssd_clientstub.c
+	mDNSShared/dnssd_ipc.c
+	mDNSMacOSX/mdns_objects/mdns_tlv.c
+	mDNSMacOSX/dnssd_stubs.c
+)
+make_fat(system_dnssd)
+target_link_libraries(system_dnssd PRIVATE
+	system_dyld
+	compiler_rt
+	system_kernel
+	platform
+	system_pthread
+	system_malloc
+	system_c
+	system_blocks
+	libdispatch_shared
+	system_asl
+	xpc
 )
 
 target_compile_definitions(system_dnssd PRIVATE
@@ -94,7 +102,7 @@ add_darling_executable(mDNSResponder
 	mDNSMacOSX/dnssec_v2/dnssec_v2.c
 	mDNSMacOSX/dnssec_v2/utilities/base_encoding/base_n.c
 	mDNSMacOSX/dnssec_v2/utilities/list/list.c
-	mDNSMacOSX/helper-stubs.c
+
 	mDNSMacOSX/HTTPUtilities.m
 	mDNSMacOSX/LegacyNATTraversal.c
 	mDNSMacOSX/mdns_objects/mdns_address.c
@@ -114,6 +122,7 @@ add_darling_executable(mDNSResponder
 	mDNSMacOSX/mdns_objects/mdns_trust.c
 	mDNSMacOSX/mdns_objects/mdns_xpc.c
 	mDNSMacOSX/mDNSMacOSX.c
+	mDNSMacOSX/helper-stubs.c
 	mDNSMacOSX/Metrics.m
 	mDNSMacOSX/Private/advertising_proxy_services.c
 	mDNSMacOSX/QuerierSupport.c
@@ -170,6 +179,7 @@ install(TARGETS mDNSResponder DESTINATION libexec/darling/usr/sbin)
 #
 add_darling_executable(mDNSResponderHelper
 	mDNSMacOSX/helper-main.c
+
 	mDNSMacOSX/helper.c
 	mDNSMacOSX/P2PPacketFilter.c
 	mDNSMacOSX/utilities/setup_assistant_helper.m

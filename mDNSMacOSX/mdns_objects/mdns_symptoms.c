@@ -1,3 +1,4 @@
+#if 0
 /*
  * Copyright (c) 2019 Apple Inc. All rights reserved.
  *
@@ -145,3 +146,4 @@ _mdns_symptoms_report_dns_host_symptom(symptom_ident_t id, const char *host)
 exit:
 	return;
 }
+#endif

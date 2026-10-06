@@ -31,6 +31,7 @@
 #  endif // DEPLOYMENT_TARGET_MACOSX
 #endif // TARGET_OS_IPHONE
 
+#import <Foundation/Foundation.h>
 #import <Foundation/NSData_Private.h>
 #import <CFNetwork/CFNSURLConnection.h>
 #import <nw/private.h>
@@ -39,6 +40,11 @@
 #import "DNSMessage.h"
 #import "HTTPUtilities.h"
 #import <CoreFoundation/CFXPCBridge.h>
+#define nw_activity_completion_reason_failure 2
+#define nw_activity_completion_reason_success 1
+#define nw_activity_create(...) (NULL)
+#define nw_activity_activate(...)
+#define nw_activity_complete_with_reason(...)
 #import "DNSHeuristics.h"
 #import <Foundation/Foundation.h>
 #import <os/log.h>
@@ -51,7 +57,7 @@ shared_session(dispatch_queue_t queue)
 	dispatch_once(&onceToken, ^{
 		@autoreleasepool {
 			// Disable AppSSO (process-wide) before any use of URLSession
-			[NSURLSession _disableAppSSO];
+			;
 
 			// Create (and configure) the NSURLSessionConfiguration
 			NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
@@ -67,18 +73,18 @@ shared_session(dispatch_queue_t queue)
 
 			if (@available(macOS 10.16, iOS 14.0, watchOS 7.0, tvOS 14.0, *)) {
 				// Disable ATS (process-wide) before any use of URLSession
-				[NSURLSession _disableATS];
+				;
 
 				// Disable reachability lookups
-				configuration._allowsReachabilityCheck = NO;
+				;
 			}
 
-			configuration._suppressedAutoAddedHTTPHeaders = [NSSet setWithObjects:@"User-Agent", nil];
-			configuration._allowsTLSSessionTickets = YES;
-			configuration._allowsTCPFastOpen = YES;
+			;
+			;
+			;
 
 			NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
-			operationQueue.underlyingQueue = queue;
+			;
 			session = [NSURLSession sessionWithConfiguration:configuration
 													delegate:nil
 											   delegateQueue:operationQueue];
@@ -137,7 +143,7 @@ http_task_create_dns_query(nw_endpoint_t endpoint, const char *urlString, dispat
 		__block nw_activity_t activity = nil;
 		switch (query_type) {
 			case kDNSRecordType_A: {
-				activity = nw_activity_create(kDNSActivityDomain, kDNSActivityLabelUnicastAQuery);
+				;
 				break;
 			}
 			case kDNSRecordType_AAAA: {
@@ -187,16 +193,16 @@ http_task_create_dns_query(nw_endpoint_t endpoint, const char *urlString, dispat
 				dns_heuristics_report_resolution_success();
 			}
 
-			dispatch_data_t dispatch_data = [data _createDispatchData];
+			dispatch_data_t dispatch_data = dispatch_data_create([data bytes], [data length], NULL, DISPATCH_DATA_DESTRUCTOR_DEFAULT);
 			response_handler(dispatch_data, (__bridge CFErrorRef)error);
 		}];
 
 		if (@available(macOS 10.16, iOS 14.0, watchOS 7.0, tvOS 14.0, *)) {
-			dataTask._hostOverride = endpoint;
+			;
 		}
 
 		if (dataTask && activity != nil) {
-			dataTask._nw_activity = activity;
+			;
 		}
 
 		return (__bridge_retained void *)dataTask;
@@ -266,7 +272,7 @@ http_task_create_pvd_query(dispatch_queue_t queue, const char *host, const char 
 		}];
 
 		if (dataTask && activity != nil) {
-			dataTask._nw_activity = nw_activity_create(kDNSActivityDomain, kDNSActivityLabelProvisioningRequest);
+			;
 		}
 
 		return (__bridge_retained void *)dataTask;

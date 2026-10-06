@@ -1,3 +1,5 @@
+#define analytics_send_event_lazy_custom(...) true
+#define COREANALYTICS_RETURNS_RETAINED
 /*
  * Copyright (c) 2019-2020 Apple Inc. All rights reserved.
  *
@@ -15,6 +17,14 @@
  */
 
 #include "dnssd_analytics.h"
+#define XPC_ACTIVITY_INTERVAL_1_DAY (24 * 60 * 60)
+#define XPC_ACTIVITY_INTERVAL_5_MIN (5 * 60)
+#define XPC_ACTIVITY_STATE_DEFER 3
+#define XPC_ACTIVITY_STATE_DONE 4
+#define XPC_ACTIVITY_INTERVAL_1_DAY (24 * 60 * 60)
+#define XPC_ACTIVITY_INTERVAL_5_MIN (5 * 60)
+#define XPC_ACTIVITY_STATE_DEFER 3
+#define XPC_ACTIVITY_STATE_DONE 4
 #include "mDNSMacOSX.h"
 #include "uds_daemon.h"
 
@@ -62,7 +72,7 @@ dnssd_analytics_post_cache_request_count(CacheRequestType inType, CacheState inS
         xpc_dictionary_set_uint64(dict, "requestCount", inRequestCount);
         return (dict);
     };
-    posted = analytics_send_event_lazy("com.apple.mDNSResponder.CacheUsage.request", create_event);
+    posted = analytics_send_event_lazy_custom("com.apple.mDNSResponder.CacheUsage.request", create_event);
     if (!posted) {
         LogRedact(MDNS_LOG_CATEGORY_ANALYTICS, MDNS_LOG_WARNING, "com.apple.mDNSResponder.CacheUsage.request:  Failed to post");
     }
@@ -103,7 +113,7 @@ dnssd_analytics_post_cache_usage_counts_for_type(CacheRequestType inType, uint64
         xpc_dictionary_set_uint64(dict, "missCount",    inMissCount);
         return (dict);
     };
-    posted = analytics_send_event_lazy("com.apple.mDNSResponder.CacheUsage.entries", create_event);
+    posted = analytics_send_event_lazy_custom("com.apple.mDNSResponder.CacheUsage.entries", create_event);
     if (!posted) {
         LogRedact(MDNS_LOG_CATEGORY_ANALYTICS, MDNS_LOG_WARNING, "com.apple.mDNSResponder.CacheUsage.entries:  Failed to post");
     }
@@ -180,7 +190,7 @@ dnssd_analytics_post_WAB_usage_event_count(WABUsageKind inKind, WABUsageType inT
     char *                  type  = UNSET_STR;
     char *                  event = UNSET_STR;
 
-	if (analytics_send_event_lazy) {
+	if (analytics_send_event_lazy_custom) {
 		switch (inKind) {
 			case WABUsageKind_results: {
 				kind = "results";
@@ -289,7 +299,7 @@ dnssd_analytics_post_WAB_usage_event_count(WABUsageKind inKind, WABUsageType inT
 			xpc_dictionary_set_uint64(dict, "eventCount",   inEventCount);
 			return (dict);
 		};
-		posted = analytics_send_event_lazy("com.apple.mDNSResponder.CacheUsage.entries", create_event);
+		posted = analytics_send_event_lazy_custom("com.apple.mDNSResponder.CacheUsage.entries", create_event);
 		if (!posted) {
 			LogRedact(MDNS_LOG_CATEGORY_ANALYTICS, MDNS_LOG_WARNING, "com.apple.mDNSResponder.CacheUsage.entries:  Failed to post");
 		}

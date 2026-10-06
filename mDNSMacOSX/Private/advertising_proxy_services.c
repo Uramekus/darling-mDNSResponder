@@ -1,3 +1,4 @@
+#if 0
 /* advertising_proxy_services.h
  *
  * Copyright (c) 2020 Apple Computer, Inc. All rights reserved.
@@ -297,3 +298,4 @@ advertising_proxy_regenerate_ula(adv_conn_ref_t **conn_ref,
 // fill-column: 120
 // indent-tabs-mode: nil
 // End:
+#endif

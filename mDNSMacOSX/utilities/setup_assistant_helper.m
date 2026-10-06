@@ -1,3 +1,4 @@
+#if 0
 /*
 * Copyright (c) 2020 Apple Inc. All rights reserved.
 *
@@ -78,3 +79,4 @@ assistant_helper_notify_when_buddy_done(buddy_done_handler_t handler)
 #endif // TARGET_OS_OSX
 }
 
+#endif

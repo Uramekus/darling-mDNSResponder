@@ -17,6 +17,9 @@
 #include "mdns_tlv.h"
 
 #include <CoreUtils/CoreUtils.h>
+#include <arpa/inet.h>
+#include <arpa/inet.h>
+#include <arpa/inet.h>
 
 //======================================================================================================================
 // MARK: - Type-Length Headers

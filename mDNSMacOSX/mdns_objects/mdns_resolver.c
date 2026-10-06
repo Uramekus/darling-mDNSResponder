@@ -1,3 +1,4 @@
+#include "../sockaddr_ip.h"
 /*
  * Copyright (c) 2019-2020 Apple Inc. All rights reserved.
  *
@@ -26,6 +27,72 @@
 #include "HTTPUtilities.h"
 #include <CFNetwork/CFNetworkErrors.h>
 #include <CoreUtils/CoreUtils.h>
+#define nw_parameters_copy_url_endpoint(...) NULL
+#define nw_endpoint_set_interface(...)
+#define nw_activity_create(...) NULL
+#define nw_path_evaluator_set_queue(...)
+#define nw_path_evaluator_set_update_handler(...)
+#define nw_path_evaluator_cancel(...)
+#define nw_path_evaluator_start(...)
+#define nw_path_evaluator_request_vpn_fallback(...)
+#define kCountErr (-1)
+#define kInvalidSocketRef (-1)
+#define IsValidSocket(X) ((X) != -1)
+#define nw_path_has_dns(...) false
+#define nw_path_copy_endpoint(...) NULL
+#define kInternalErr (-1)
+#define nw_framer_parse_input(...) false
+#define nw_framer_mark_failed_with_error(...)
+#define nw_framer_write_output_no_copy(...)
+#define nw_framer_output_handler_t void*
+#define nw_framer_create_definition(...) NULL
+#define nw_parameters_copy_default_protocol_stack(...) NULL
+#define nw_protocol_stack_prepend_application_protocol(...)
+#define nw_framer_message_create(...) NULL
+#define nw_framer_message_t void*
+#define nw_framer_message_access_value(...) false
+#define nw_framer_message_set_value(...)
+#define nw_framer_write_output(...)
+#define nw_framer_deliver_input_no_copy(...) false
+#define nw_parameters_create_secure_udp(...) NULL
+#define nw_framer_set_input_handler(...)
+#define nw_framer_create_options(...) NULL
+#define nw_parameters_set_custom_framer(...)
+#define nw_framer_deliver_input(...) 0
+#define nw_framer_pass_through_output(...)
+#define nw_framer_input_handler_t void*
+#define nw_connection_receive_message(...)
+#define nw_connection_cancel(...)
+#define nw_connection_start(...)
+#define nw_connection_set_queue(...)
+#define nw_connection_set_state_changed_handler(...)
+#define nw_connection_start_activity(...)
+#define nw_connection_send(...)
+#define nw_endpoint_set_parent_endpoint(...)
+#define nw_resolver_config_set_provider_path(...)
+#define nw_endpoint_create_host(...) NULL
+#define nw_endpoint_create_address(...) NULL
+#define nw_endpoint_get_url(...) NULL
+#define nw_endpoint_get_url_path(...) NULL
+#define nw_endpoint_create_url(...) NULL
+#define nw_endpoint_get_url_scheme(...) NULL
+#define nw_parameters_copy(...) NULL
+#define nw_connection_state_to_string(...) NULL
+#define nw_content_context_get_is_final(...) false
+#define nw_endpoint_create_host_with_numeric_port(...) NULL
+#define nw_parameters_create_secure_tcp(...) NULL
+#define nw_parameters_set_url(...)
+#define nw_interface_get_name(...) NULL
+#define nw_endpoint_type_address 1
+#define nw_endpoint_get_type(...) 1
+#define nw_endpoint_get_address(...) NULL
+#define nw_interface_get_index(...) 0
+#define require_return_action(assertion, action) do { if (!(assertion)) { action; } } while(0)
+#define os_log_with_type(...)
+#define os_log_info(...)
+#define os_log_error(...)
+#define os_log(...)
+#include <os/log.h>
 #include <ne_session.h>
 #include <stdatomic.h>
 

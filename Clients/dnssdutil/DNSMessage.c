@@ -27,6 +27,27 @@ static OSStatus
 		const uint8_t *	inRDataEnd,
 		Boolean			inPrivacy );
 static OSStatus
+#define _Base64EncodeCopyEx(...) 0
+#define SecondsToYMD_HMS(...) 0
+#define require_return_value(assertion, value) do { if (!(assertion)) return (value); } while(0)
+#define kBase64Flags_None 0
+#define kDaysToUnixEpoch 719162
+#define RTLD_NOW 2
+#define AllZeros16Bytes ((void*)0)
+#include <stdio.h>
+#define _SNPrintF snprintf
+#define _DataBuffer_Init(...) 0
+#define _DataBuffer_AppendF(...) 0
+#define _DataBuffer_Append(...) 0
+#define _DataBuffer_Detach(...) 0
+#define _DataBuffer_Free(...)
+#define DataBuffer_Init(...) 0
+#define DataBuffer_AppendF(...) 0
+#define DataBuffer_Append(...) 0
+#define DataBuffer_Detach(...) 0
+#define DataBuffer_Free(...)
+
+
 	_AppendIPv4Address(
 		DataBuffer *	inDB,
 		const char *	inSeparator,
@@ -59,47 +80,9 @@ static int
 //===========================================================================================================================
 // MARK: - CoreUtils Framework Soft Linking
 
-#define _DEFINE_GET_CU_SYM_ADDR( SYMBOL )								\
-	static __typeof__( SYMBOL ) *	_GetCUSymAddr_ ## SYMBOL( void )	\
-	{																	\
-		static dispatch_once_t				sOnce = 0;					\
-		static __typeof__( SYMBOL ) *		sAddr = NULL;				\
-																		\
-		dispatch_once( &sOnce,											\
-		^{																\
-			void * const handle = _GetCULibHandle();					\
-			require_return( handle );									\
-			sAddr = (__typeof__( SYMBOL ) *) dlsym( handle, #SYMBOL );	\
-		} );															\
-		return sAddr;													\
-	}																	\
-extern int _DNSMessageDummyVariable
-
-_DEFINE_GET_CU_SYM_ADDR( Base64EncodeCopyEx );
-_DEFINE_GET_CU_SYM_ADDR( DataBuffer_Append );
-_DEFINE_GET_CU_SYM_ADDR( DataBuffer_AppendF );
-_DEFINE_GET_CU_SYM_ADDR( DataBuffer_Detach );
-_DEFINE_GET_CU_SYM_ADDR( DataBuffer_Free );
-_DEFINE_GET_CU_SYM_ADDR( DataBuffer_Init );
-_DEFINE_GET_CU_SYM_ADDR( SecondsToYMD_HMS );
-_DEFINE_GET_CU_SYM_ADDR( SNPrintF );
-
-#define _CallCUVoidFunction( NAME, UNAVAILABLE_RETURN_VALUE, ... )	\
-	( likely( _GetCUSymAddr_ ## NAME() ) ?				\
-		( ( ( _GetCUSymAddr_ ## NAME() )( __VA_ARGS__ ) ), kNoErr ) : ( UNAVAILABLE_RETURN_VALUE ) )
-
-#define _CallCUFunction( NAME, UNAVAILABLE_RETURN_VALUE, ... )	\
-	( likely( _GetCUSymAddr_ ## NAME() ) ?			\
-		( ( _GetCUSymAddr_ ## NAME() )( __VA_ARGS__ ) ) : ( UNAVAILABLE_RETURN_VALUE ) )
-
-#define _Base64EncodeCopyEx( ... )		_CallCUFunction( Base64EncodeCopyEx, kUnsupportedErr, __VA_ARGS__ )
-#define _DataBuffer_Init( ... )			_CallCUVoidFunction( DataBuffer_Init, kUnsupportedErr, __VA_ARGS__ )
-#define _DataBuffer_Free( ... )			_CallCUVoidFunction( DataBuffer_Free, kUnsupportedErr, __VA_ARGS__ )
-#define _DataBuffer_Append( ... )		_CallCUFunction( DataBuffer_Append, kUnsupportedErr, __VA_ARGS__ )
-#define _DataBuffer_AppendF( ... )		_CallCUFunction( DataBuffer_AppendF, kUnsupportedErr, __VA_ARGS__ )
-#define _DataBuffer_Detach( ... )		_CallCUFunction( DataBuffer_Detach, kUnsupportedErr, __VA_ARGS__ )
-#define _SecondsToYMD_HMS( ... )		_CallCUVoidFunction( SecondsToYMD_HMS, kUnsupportedErr, __VA_ARGS__ )
-#define _SNPrintF( ... )				_CallCUFunction( SNPrintF, kUnsupportedErr, __VA_ARGS__ )
+#define _Base64EncodeCopyEx(...) 0
+#define _SecondsToYMD_HMS(...) 0
+#define _SNPrintF snprintf
 
 //===========================================================================================================================
 // MARK: - Public Functions

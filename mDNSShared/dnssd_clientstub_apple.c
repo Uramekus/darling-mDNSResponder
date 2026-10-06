@@ -26,6 +26,8 @@
  */
 
 #include "dnssd_clientstub_apple.h"
+#define CUBytesPerKibiByte 1024
+#define CUBytesPerKibiByte 1024
 #include "dns_sd_private.h"
 
 #include <CoreUtils/CommonServices.h>
@@ -54,7 +56,7 @@ DNSServiceSetResolverDefaults(const void * const plist_data_ptr, const size_t pl
 	g_defaults_dict = new_dict;
 	os_unfair_lock_unlock(&g_defaults_lock);
 
-	xpc_forget(&old_dict);
+	do { if (old_dict) { xpc_release(old_dict); old_dict = NULL; } } while (0);
 	err = kDNSServiceErr_NoError;
 
 exit:

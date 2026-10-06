@@ -1,3 +1,4 @@
+#define STATIC_INLINE static inline
 /* -*- Mode: C; tab-width: 4 -*-
  *
  * Copyright (c) 1997-2004 Apple Computer, Inc. All rights reserved.
@@ -157,6 +158,7 @@ extern "C" {
         #include    <sys/ioctl.h>
         #include    <sys/socket.h>
         #include    <unistd.h>
+        #include    <MacTypes.h>
 
     #else
 
@@ -1488,4 +1490,10 @@ OSStatus    CommonServicesTest( void );
 }
 #endif
 
+static inline uint16_t ReadBig16(const uint8_t *ptr) { return (uint16_t)(((uint16_t)ptr[0] << 8) | (uint16_t)ptr[1]); }
+static inline void WriteBig16(uint8_t *ptr, uint16_t val) { ptr[0] = (uint8_t)(val >> 8); ptr[1] = (uint8_t)(val & 0xFF); }
+static inline uint32_t ReadBig32(const uint8_t *ptr) { return (uint32_t)(((uint32_t)ptr[0] << 24) | ((uint32_t)ptr[1] << 16) | ((uint32_t)ptr[2] << 8) | (uint32_t)ptr[3]); }
+static inline void WriteBig32(uint8_t *ptr, uint32_t val) { ptr[0] = (uint8_t)(val >> 24); ptr[1] = (uint8_t)(val >> 16); ptr[2] = (uint8_t)(val >> 8); ptr[3] = (uint8_t)(val & 0xFF); }
+static inline uint8_t Read8(const uint8_t *ptr) { return *ptr; }
+static inline void Write8(uint8_t *ptr, uint8_t val) { *ptr = val; }
 #endif  // __COMMON_SERVICES__

@@ -16,6 +16,8 @@
 
 #include "mdns_helpers.h"
 
+#include <mach/mach_time.h>
+#include <os/log.h>
 #include <CoreUtils/CoreUtils.h>
 #include "DNSMessage.h"
 
